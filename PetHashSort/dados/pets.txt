@@ -1,0 +1,51 @@
+# microchip;nome;especie;mania
+60218841;Luna;gata;dorme em cima do teclado
+31057720;Thor;cão;late para o aspirador
+48812903;Pipoca;cão;pula quando ouve a palavra "passeio"
+22091187;Mel;gata;derruba copos da mesa, um por um
+70334512;Zeus;cão;tem medo do gato do vizinho
+51200468;Amora;gata;mia para a geladeira
+13870255;Luna;cachorra;rouba meias
+39021746;Bob;cão;come a ração do irmão
+84460013;Bob;gato;dorme 20 horas por dia
+27719384;Lola;cachorra;adora tomar banho
+65502291;Paçoca;gato;caça o ponteiro laser
+44183067;Frida;cachorra;usa laço e se acha
+90027758;Simba;gato;acha que é leão
+18345602;Nina;coelha;rói o fio do carregador
+76690431;Pandora;gata;abre portas sozinha
+33208179;Chico;papagaio;imita o toque do celular
+57741820;Thor;gato;tem nome de cão, mas é gato
+81196354;Fred;hamster;corre a noite inteira na rodinha
+29573006;Luna;calopsita;assobia quando alguém chega
+62015547;Toddy;cão;só come se for na mão
+10482931;Amoroso;cão;lambe a visita inteira quando chega
+19273645;Caça Rato;gato;traz lagartixa morta de presente
+14820593;Wellington Rato;porquinho-da-índia;faz barulho toda vez que abrem a sacola de verdura
+17392014;Picachu;calopsita;canta o hino do time quando liga a TV
+12948573;Vampeta;cão;dá cambalhota no tapete depois do banho
+16503829;Alex Cabeção;gato;fica encarando a parede vazia por meia hora
+18472910;Imperador;cão;exige dormir no meio da cama de casal
+11039482;Profeta;papagaio;xinga o carteiro toda manhã
+15628394;Fabuloso;gato;amassa pãozinho na coberta antes de dormir
+13948271;Rústico;cão;cava buraco no quintal e esconde o osso
+17829304;Chulapa;gato;dorme dentro da caixa de papelão menor que ele
+14293847;Pé de Anjo;cachorra;anda na ponta das patas quando o chão está molhado
+18920341;Amoroso;gato;pede carinho na barriga e morde a mão dois segundos depois
+12384756;Caça Rato;furão;esconde chaves e moedas embaixo do sofá
+19485720;Wellington Rato;hamster;enche as bochechas de semente até ficar o dobro do tamanho
+15029384;Picachu;cão;persegue o próprio rabo até ficar tonto
+16738291;Vampeta;papagaio;dá gargalhada quando alguém tropeça
+11829374;Alex Cabeção;tartaruga;tenta escalar a parede do terrário o dia inteiro
+13492810;Imperador;gato;bebe água direto da torneira do banheiro
+17102938;Profeta;gato;arranha o sofá olhando diretamente nos olhos do dono
+14920381;Fabuloso;cão;uiva junto com a sirene da ambulância
+18293047;Rústico;coelho;bate a pata traseira com força quando está bravo
+12738491;Chulapa;cão;dorme de barriga para cima e roncando alto
+19038472;Pé de Anjo;calopsita;arranca as teclas do notebook com o bico
+15839201;Amoroso;periquito;beija o próprio reflexo no espelho
+16192837;Caça Rato;gata;salta em cima do guarda-roupa de uma vez só
+11492038;Wellington Rato;cão;cava a caminha antes de deitar
+13728194;Picachu;gato;corre pela casa inteira de madrugada sem motivo
+17592048;Vampeta;jabuti;come folha de hibisco como se fosse churrasco
+14029385;Imperador;cão;late para o próprio reflexo no vidro do forno
