@@ -53,12 +53,12 @@ public class TabelaHash {
     public ArrayList<Pet> buscarPorNome(String nome) {
         ArrayList<Pet> encontrados = new ArrayList<>();
 
-        String chave = Util.normalizer(nome);
+        String chave = Util.normalizar(nome);
         int posicao = hash(chave);
 
         No atual = baldes[posicao];
         while (atual != null) {
-            if (atual.getPet().getNome().equals(chave)) {
+            if (atual.getPet().getChave().equals(chave)) {
                 encontrados.add(atual.getPet());
             }
             atual = atual.getProximo();

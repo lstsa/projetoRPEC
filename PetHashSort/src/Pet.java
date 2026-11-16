@@ -8,7 +8,7 @@ public class Pet {
     public Pet(int microchip,String nome, String especie, String mania) {
         this.microchip = microchip;
         this.nome = nome;
-        this.chave = Util.normalizer(nome);
+        this.chave = Util.normalizar(nome);
         this.especie = especie;
         this.mania = mania;
     }
