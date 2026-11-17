@@ -25,6 +25,7 @@ public class Main {
                 case 5: tabela.exibirEstatisticas(); break;
                 case 6: organizarSalaEspera();break;
                 case 7: modoPassoAPasso(); break;
+                case 8: testarComPetsGerados(); break;
                 case 0: System.out.println("Fechando a clínica. Até logo!"); break;
                 default: System.out.println("Opção inválida.");
             }
@@ -43,6 +44,7 @@ public class Main {
         System.out.println("║  5 - Estatísticas da tabela              ║");
         System.out.println("║  6 - Organizar sala de espera            ║");
         System.out.println("║  7 - Modo Passo a Passo                  ║");
+        System.out.println("║  8 - Testar com pets gerados             ║");
         System.out.println("║  0 - Fechar a clínica                    ║");
         System.out.println("╚══════════════════════════════════════════╝");
     }
@@ -211,6 +213,30 @@ public class Main {
         System.out.println("Fila final (ordenada? " + Ordenacao.estaOrdenado(copia) + "):");
         for (Pet p : copia) System.out.println("  " + p);
         System.out.println("Total → comparações: " + c.comparacoes + " | trocas: " + c.trocas);
+    }
+
+    private static void testarComPetsGerados() {
+        int n = lerInteiro("Quantos pets gerar (ex.: 1000 ou 10000)? ");
+        int m = lerInteiro("Tamanho M: ");
+        int tipo = lerInteiro("Função hash (1 = soma, 2 = polinomial): ");
+        if (n < 1 || n > 100000 || m < 1 || (tipo != 1 && tipo != 2)) {
+            System.out.println("Valores inválidos.");
+            return;
+        }
+
+        Pet[] pets = GeradorPets.gerarAleatorio(n, 42);
+        TabelaHash teste = new TabelaHash(m, tipo);
+        for (Pet p : pets) {
+            teste.inserir(p);
+        }
+        teste.exibirEstatisticas();
+
+        long inicio = System.nanoTime();
+        for (int i = 0; i < 1000; i++) {
+            teste.buscarPorNome("Luna");
+        }
+        long fim = System.nanoTime();
+        System.out.printf("1000 buscas por Luna: %.3f ms%n", (fim - inicio) / 1_000_000.0);
     }
 
 }

@@ -63,14 +63,15 @@ public class Ordenacao {
     }
 
     public static void quickSort(Pet[] v, Contador c) {
-        quickSort(v, 0, v.length - 1, c);
+        quickSort(v, 0, v.length - 1, 0, c);
     }
 
-    private static void quickSort(Pet[] v, int inicio, int fim, Contador c) {
+    private static void quickSort(Pet[] v, int inicio, int fim, int nivel, Contador c) {
         if (inicio < fim) {
+            if (nivel > c.profundidadeMax) c.profundidadeMax = nivel;
             int posPivo = particionar(v, inicio, fim, c);
-            quickSort(v, inicio, posPivo - 1, c);
-            quickSort(v, posPivo + 1, fim, c);
+            quickSort(v, inicio, posPivo - 1, nivel + 1, c);
+            quickSort(v, posPivo + 1, fim, nivel + 1, c);
         }
     }
 
