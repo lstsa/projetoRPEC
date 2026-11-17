@@ -24,6 +24,7 @@ public class Main {
                 case 4: tabela.exibir(); break;
                 case 5: tabela.exibirEstatisticas(); break;
                 case 6: organizarSalaEspera();break;
+                case 7: modoPassoAPasso(); break;
                 case 0: System.out.println("Fechando a clínica. Até logo!"); break;
                 default: System.out.println("Opção inválida.");
             }
@@ -41,6 +42,7 @@ public class Main {
         System.out.println("║  4 - Mostrar fichário (tabela hash)      ║");
         System.out.println("║  5 - Estatísticas da tabela              ║");
         System.out.println("║  6 - Organizar sala de espera            ║");
+        System.out.println("║  7 - Modo Passo a Passo                  ║");
         System.out.println("║  0 - Fechar a clínica                    ║");
         System.out.println("╚══════════════════════════════════════════╝");
     }
@@ -168,6 +170,47 @@ public class Main {
                 }
             }
         }
+    }
+
+    private static void modoPassoAPasso() {
+        ArrayList<Pet> lista = tabela.listarTodos();
+
+        int n = lerInteiro("Quantos pets na sala de espera (2 a 10)? ");
+        if (n < 2 || n > 10) {
+            System.out.println("Escolha entre 2 e 10.");
+            return;
+        }
+        if (n > lista.size()) {
+            System.out.println("A tabela só tem " + lista.size() + " pets.");
+            return;
+        }
+
+        Pet[] original = new Pet[n];
+        for (int i = 0; i < n; i++) {
+            original[i] = lista.get(i);
+        }
+
+        System.out.println("Fila inicial:");
+        for (Pet p : original) System.out.println("  " + p);
+
+        System.out.println("1 - Bubble Sort  2 - Insertion Sort  3 - Quick Sort");
+        int alg = lerInteiro("Algoritmo: ");
+        if (alg < 1 || alg > 3) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
+        Pet[] copia = Ordenacao.copiar(original);
+        Contador c = new Contador();
+
+        if (alg == 1) PassoAPasso.bubbleSort(copia, c);
+        else if (alg == 2) PassoAPasso.insertionSort(copia, c);
+        else PassoAPasso.quickSort(copia, c);
+
+        System.out.println();
+        System.out.println("Fila final (ordenada? " + Ordenacao.estaOrdenado(copia) + "):");
+        for (Pet p : copia) System.out.println("  " + p);
+        System.out.println("Total → comparações: " + c.comparacoes + " | trocas: " + c.trocas);
     }
 
 }
