@@ -7,7 +7,7 @@ public class Main {
     private static TabelaHash tabela;
 
     public static void main(String[] args) throws IOException {
-        tabela = new TabelaHash(13,1);
+        tabela = new TabelaHash(16,2);
         for (Pet p : LeitorArquivo.ler("dados/pets.txt")) {
             tabela.inserir(p);
         }
@@ -23,6 +23,7 @@ public class Main {
                 case 3: removerPet(); break;
                 case 4: tabela.exibir(); break;
                 case 5: tabela.exibirEstatisticas(); break;
+                case 6: organizarSalaEspera();break;
                 case 0: System.out.println("Fechando a clínica. Até logo!"); break;
                 default: System.out.println("Opção inválida.");
             }
@@ -39,6 +40,7 @@ public class Main {
         System.out.println("║  3 - Remover pet (microchip)             ║");
         System.out.println("║  4 - Mostrar fichário (tabela hash)      ║");
         System.out.println("║  5 - Estatísticas da tabela              ║");
+        System.out.println("║  6 - Organizar sala de espera            ║");
         System.out.println("║  0 - Fechar a clínica                    ║");
         System.out.println("╚══════════════════════════════════════════╝");
     }
@@ -128,4 +130,44 @@ public class Main {
         tabela = nova;
         System.out.println("Tabela reconstruída com M = " + m + " e função " + tipo + ".");
     }
+
+    private static void organizarSalaEspera() {
+        ArrayList<Pet> lista = tabela.listarTodos();
+        Pet[] original = new Pet[lista.size()];
+        for (int i = 0; i < original.length; i++) {
+            original[i] = lista.get(i);
+        }
+
+        System.out.println("1 - Bubble Sort  2 - Insertion Sort  3 - Quick Sort  4 - Todos");
+        int opcao = lerInteiro("Algoritmo: ");
+        if (opcao < 1 || opcao > 4) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
+        for (int alg = 1; alg <= 3; alg++) {
+            if (opcao != 4 && opcao != alg) continue;
+
+            Pet[] copia = Ordenacao.copiar(original);
+            Contador c = new Contador();
+            String nome;
+
+            if (alg == 1) { nome = "Bubble Sort";    Ordenacao.bubbleSort(copia, c); }
+            else if (alg == 2) { nome = "Insertion Sort"; Ordenacao.insertionSort(copia, c); }
+            else { nome = "Quick Sort"; Ordenacao.quickSort(copia, c); }
+
+            System.out.println();
+            System.out.println("=== " + nome + " ===");
+            System.out.println("Ordenado corretamente? " + Ordenacao.estaOrdenado(copia));
+            System.out.println("Comparações: " + c.comparacoes + " | Trocas: " + c.trocas);
+
+            if (opcao != 4) {
+                System.out.println("Fila da sala de espera:");
+                for (int i = 0; i < copia.length; i++) {
+                    System.out.println((i + 1) + "º " + copia[i]);
+                }
+            }
+        }
+    }
+
 }
