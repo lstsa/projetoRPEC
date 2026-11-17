@@ -26,6 +26,7 @@ public class Main {
                 case 6: organizarSalaEspera();break;
                 case 7: modoPassoAPasso(); break;
                 case 8: testarComPetsGerados(); break;
+                case 9: GrandeCorrida.iniciar(); break;
                 case 0: System.out.println("Fechando a clínica. Até logo!"); break;
                 default: System.out.println("Opção inválida.");
             }
@@ -45,6 +46,7 @@ public class Main {
         System.out.println("║  6 - Organizar sala de espera            ║");
         System.out.println("║  7 - Modo Passo a Passo                  ║");
         System.out.println("║  8 - Testar com pets gerados             ║");
+        System.out.println("║  9 - Grande corrida                      ║");
         System.out.println("║  0 - Fechar a clínica                    ║");
         System.out.println("╚══════════════════════════════════════════╝");
     }
