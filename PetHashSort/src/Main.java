@@ -7,7 +7,7 @@ public class Main {
     private static TabelaHash tabela;
 
     public static void main(String[] args) throws IOException {
-        tabela = new TabelaHash(13);
+        tabela = new TabelaHash(13,1);
         for (Pet p : LeitorArquivo.ler("dados/pets.txt")) {
             tabela.inserir(p);
         }
@@ -22,6 +22,7 @@ public class Main {
                 case 2: buscarPets(); break;
                 case 3: removerPet(); break;
                 case 4: tabela.exibir(); break;
+                case 5: tabela.exibirEstatisticas(); break;
                 case 0: System.out.println("Fechando a clínica. Até logo!"); break;
                 default: System.out.println("Opção inválida.");
             }
@@ -37,6 +38,7 @@ public class Main {
         System.out.println("║  2 - Buscar pets por nome                ║");
         System.out.println("║  3 - Remover pet (microchip)             ║");
         System.out.println("║  4 - Mostrar fichário (tabela hash)      ║");
+        System.out.println("║  5 - Estatísticas da tabela              ║");
         System.out.println("║  0 - Fechar a clínica                    ║");
         System.out.println("╚══════════════════════════════════════════╝");
     }
@@ -110,5 +112,20 @@ public class Main {
         if (tabela.removerPorMicrochip(microchip)) {
             System.out.println("Removido: " + pet);
         }
+    }
+
+    private static void reconstruirTabela() {
+        int m = lerInteiro("Novo tamanho M: ");
+        int tipo = lerInteiro("Função hash (1 = soma, 2 = grupo): ");
+        if (m < 1 || (tipo != 1 && tipo != 2)) {
+            System.out.println("Valores inválidos.");
+            return;
+        }
+        TabelaHash nova = new TabelaHash(m, tipo);
+        for (Pet p : tabela.listarTodos()) {
+            nova.inserir(p);
+        }
+        tabela = nova;
+        System.out.println("Tabela reconstruída com M = " + m + " e função " + tipo + ".");
     }
 }
