@@ -1,8 +1,22 @@
+/**
+ * Versões narradas dos três algoritmos, usadas no modo passo a passo (até 10 pets).
+ * A lógica é idêntica à da classe Ordenacao; ficam separadas porque imprimir na tela
+ * é lento e distorceria os tempos medidos na Grande Corrida.
+ */
+
 public class PassoAPasso {
+
+    /**
+     * Texto curto do pet para a narração, no formato "Luna (60218841)".
+     */
 
     private static String rotulo(Pet p) {
         return p.getNome() + " (" + p.getMicrochip() + ")";
     }
+
+    /**
+     * Mostra o estado atual do vetor em uma linha, para ver o efeito de cada passo.
+     */
 
     private static void mostrarFila(Pet[] v) {
         StringBuilder sb = new StringBuilder("   Fila: ");
@@ -13,11 +27,21 @@ public class PassoAPasso {
         System.out.println(sb);
     }
 
+    /**
+     * Troca dois elementos de posição (swap).
+     */
+
     private static void trocar(Pet[] v, int i, int j) {
         Pet temp = v[i];
         v[i] = v[j];
         v[j] = temp;
     }
+
+    /**
+     * Bubble Sort narrado: cada comparação mostra SIM (os pets trocam de lugar) ou NÃO,
+     * e o fim de cada passagem mostra os contadores e a fila. Para quando uma passagem
+     * não faz nenhuma troca.
+     */
 
     public static void bubbleSort(Pet[] v, Contador c) {
         int n = v.length;
@@ -52,6 +76,13 @@ public class PassoAPasso {
         }
     }
 
+    /**
+     * Insertion Sort narrado: cada pet "chega" e é encaixado na parte já ordenada,
+     * deslocando os maiores. O caso do menor elemento (que vai para a primeira
+     * posição) tem frase própria. A fila só é mostrada depois do encaixe, quando o vetor
+     * está consistente (durante o deslocamento há um elemento duplicado por instantes).
+     */
+
     public static void insertionSort(Pet[] v, Contador c) {
         for (int i = 1; i < v.length; i++) {
             Pet atual = v[i];
@@ -83,9 +114,20 @@ public class PassoAPasso {
         }
     }
 
+    /**
+     * Inicia o Quick Sort narrado sobre o vetor inteiro.
+     */
+
     public static void quickSort(Pet[] v, Contador c) {
         quickSort(v, 0, v.length - 1, 0, c);
     }
+
+    /**
+     * Quick Sort narrado para a faixa [inicio..fim]. O recuo da narração cresce com o
+     * nível da recursão, mostrando a faixa sendo dividida. A troca de um elemento
+     * consigo mesmo tem frase própria, e o pivô é anunciado em cada faixa. Depois da
+     * partição, ordena a faixa dos menores [inicio..i] e a dos maiores [i+2..fim].
+     */
 
     private static void quickSort(Pet[] v, int inicio, int fim, int nivel, Contador c) {
         if (inicio >= fim) return;

@@ -1,3 +1,10 @@
+/**
+ * Gera pets aleatórios para a Grande Corrida e para os testes da tabela hash,
+ * combinando nomes, espécies e manias, com microchips únicos. Os nomes se repetem
+ * de propósito (e há nomes compostos) para provocar colisões e ter muitas chaves
+ * distintas. Usa semente fixa, então os mesmos dados são gerados a cada execução.
+ */
+
 import java.util.Random;
 
 public class GeradorPets {
@@ -22,6 +29,11 @@ public class GeradorPets {
             "arranca teclas", "encara a parede", "corre de madrugada"
     };
 
+    /**
+     * Gera n pets já em ordem crescente de microchip. O intervalo de 8 dígitos é dividido
+     * em n fatias e cada pet sorteia um número dentro da sua fatia; como as fatias não se
+     * sobrepõem, nenhum microchip se repete.
+     */
 
     public static Pet[] gerarOrdenado(int n, long semente) {
         Random rnd = new Random(semente);
@@ -43,6 +55,12 @@ public class GeradorPets {
         return pets;
     }
 
+    /**
+     * Devolve uma cópia embaralhada do vetor (o original não é alterado). Usa o
+     * Fisher-Yates: percorre de trás para frente trocando cada posição com uma posição
+     * sorteada entre 0 e ela mesma, o que torna todas as ordens igualmente prováveis.
+     */
+
     public static Pet[] embaralhar(Pet[] original, long semente) {
         Pet[] v = Ordenacao.copiar(original);
         Random rnd = new Random(semente);
@@ -55,6 +73,11 @@ public class GeradorPets {
         return v;
     }
 
+    /**
+     * Devolve uma cópia em ordem inversa (decrescente, se a original for crescente),
+     * sem usar ordenação pronta.
+     */
+
     public static Pet[] inverter(Pet[] original) {
         Pet[] v = new Pet[original.length];
         for (int i = 0; i < original.length; i++) {
@@ -62,6 +85,10 @@ public class GeradorPets {
         }
         return v;
     }
+
+    /**
+     * Atalho: gera n pets com microchips únicos em ordem aleatória.
+     */
 
     public static Pet[] gerarAleatorio(int n, long semente) {
         return embaralhar(gerarOrdenado(n, semente), semente + 1);

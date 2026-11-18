@@ -2,12 +2,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Programa principal: menu de console da clínica veterinária (Cenário A). O
+ * fichário da recepção é uma tabela hash (chave = nome do pet) e a sala de espera é
+ * um vetor ordenado por microchip. Os dados iniciais vêm de um arquivo de texto.
+ */
+
 public class Main {
     private static Scanner teclado = new Scanner(System.in);
     private static TabelaHash tabela;
 
+    /**
+     * Carrega os pets do arquivo numa tabela inicial (M = 16, função polinomial) e
+     * mantém o menu em laço até o usuário escolher sair.
+     */
+
     public static void main(String[] args) throws IOException {
-        tabela = new TabelaHash(16,2);
+        tabela = new TabelaHash(13,1);
         for (Pet p : LeitorArquivo.ler("dados/pets.txt")) {
             tabela.inserir(p);
         }
@@ -26,12 +37,17 @@ public class Main {
                 case 6: organizarSalaEspera();break;
                 case 7: modoPassoAPasso(); break;
                 case 8: testarComPetsGerados(); break;
-                case 9: GrandeCorrida.iniciar(); break;
+                case 9: GrandeCorrida.iniciar();
+                case 10: reconstruirTabela(); break;
                 case 0: System.out.println("Fechando a clínica. Até logo!"); break;
                 default: System.out.println("Opção inválida.");
             }
         } while (opcao != 0);
     }
+
+    /**
+     * Mostra as opções do menu.
+     */
 
     private static void mostrarMenu() {
         System.out.println();
@@ -47,9 +63,16 @@ public class Main {
         System.out.println("║  7 - Modo Passo a Passo                  ║");
         System.out.println("║  8 - Testar com pets gerados             ║");
         System.out.println("║  9 - Grande corrida                      ║");
+        System.out.println("║  10 - Reconstruir tabela                 ║");
         System.out.println("║  0 - Fechar a clínica                    ║");
         System.out.println("╚══════════════════════════════════════════╝");
     }
+
+    /**
+     * Lê um número inteiro do teclado, repetindo a pergunta se a entrada for inválida.
+     * Lê sempre a linha inteira e converte com parseInt, evitando o bug do Scanner ao
+     * misturar nextInt e nextLine.
+     */
 
     private static int lerInteiro(String mensagem) {
         while (true) {
@@ -62,6 +85,11 @@ public class Main {
             }
         }
     }
+
+    /**
+     * Cadastra um pet com as mesmas validações da leitura do arquivo: microchip com 8
+     * dígitos e único, campos preenchidos e sem ";" (que quebraria o formato do arquivo).
+     */
 
     private static void cadastrarPet() {
         int microchip = lerInteiro("Microchip (8 dígitos): ");
@@ -94,6 +122,11 @@ public class Main {
         System.out.println("Pet cadastrado!");
     }
 
+    /**
+     * Busca e mostra todos os pets com o nome informado, ignorando acentos e
+     * diferença entre maiúsculas e minúsculas.
+     */
+
     private static void buscarPets() {
         System.out.print("Nome do pet: ");
         String nome = teclado.nextLine();
@@ -109,6 +142,11 @@ public class Main {
         }
     }
 
+    /**
+     * Remove um pet pelo microchip. Busca antes de remover, para mostrar quem saiu do
+     * fichário.
+     */
+
     private static void removerPet() {
         int microchip = lerInteiro("Microchip do pet a remover: ");
 
@@ -122,9 +160,14 @@ public class Main {
         }
     }
 
+    /**
+     * Recria a tabela com outro M e outra função hash, reinserindo os mesmos pets (o
+     * balde de cada pet depende de M). Usada para comparar as configurações.
+     */
+
     private static void reconstruirTabela() {
         int m = lerInteiro("Novo tamanho M: ");
-        int tipo = lerInteiro("Função hash (1 = soma, 2 = grupo): ");
+        int tipo = lerInteiro("Função hash (1 = soma, 2 = polinomial): ");
         if (m < 1 || (tipo != 1 && tipo != 2)) {
             System.out.println("Valores inválidos.");
             return;
@@ -136,6 +179,13 @@ public class Main {
         tabela = nova;
         System.out.println("Tabela reconstruída com M = " + m + " e função " + tipo + ".");
     }
+
+    /**
+     * Ordena os pets da tabela por microchip com o algoritmo escolhido (ou com todos).
+     * Cada algoritmo trabalha numa cópia do mesmo vetor, e são mostradas a conferência de
+     * correção, as comparações e as trocas. A fila completa só é impressa quando se
+     * escolhe um único algoritmo.
+     */
 
     private static void organizarSalaEspera() {
         ArrayList<Pet> lista = tabela.listarTodos();
@@ -175,6 +225,11 @@ public class Main {
             }
         }
     }
+
+    /**
+     * Mostra a ordenação narrada passo a passo, limitada a 10 pets (o suficiente para
+     * acompanhar cada troca na tela). Usa os primeiros pets na ordem dos baldes.
+     */
 
     private static void modoPassoAPasso() {
         ArrayList<Pet> lista = tabela.listarTodos();
@@ -216,6 +271,12 @@ public class Main {
         for (Pet p : copia) System.out.println("  " + p);
         System.out.println("Total → comparações: " + c.comparacoes + " | trocas: " + c.trocas);
     }
+
+    /**
+     * Testa a tabela hash com muitos pets gerados, numa tabela local (o fichário
+     * principal não é alterado). Mostra as estatísticas e o tempo de 1000 buscas por
+     * "Luna", usado para analisar o efeito do fator de carga (pergunta 5).
+     */
 
     private static void testarComPetsGerados() {
         int n = lerInteiro("Quantos pets gerar (ex.: 1000 ou 10000)? ");

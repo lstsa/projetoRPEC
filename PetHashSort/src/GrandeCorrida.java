@@ -1,3 +1,15 @@
+/**
+ * Mede tempo, comparações e trocas dos três algoritmos com 50, 1.000 e 10.000 pets,
+ * em três situações (aleatório, já ordenado e ordem inversa), e imprime as tabelas.
+ * Todos os algoritmos recebem os mesmos dados, em cópias novas, para a comparação ser
+ * justa. Cada medição é repetida (REPETICOES) e vale o menor tempo, reduzindo o ruído
+ * da JVM e do sistema. PILHA_GRANDE controla se a corrida roda numa thread com pilha
+ * ampliada (256 MB), necessária para o Quick Sort completar a recursão em dados
+ * ordenados; com false, a pilha padrão pode estourar. Resultados são guardados em
+ * matrizes [algoritmo][situação][tamanho].
+ */
+
+
 public class GrandeCorrida {
     private static final int[] TAMANHOS = {50, 1000, 10000};
     private static final String[] ALGORITMOS = {"Bubble Sort", "Insertion Sort", "Quick Sort"};
@@ -10,6 +22,11 @@ public class GrandeCorrida {
     private static double[][][] comparacoes = new double[3][3][3];
     private static double[][][] trocas = new double[3][3][3];
     private static int[][] profundidade = new int[3][3];
+
+    /**
+     * Inicia a corrida. A thread própria serve apenas para ampliar a pilha; o menu só
+     * volta quando a corrida terminar.
+     */
 
     public static void iniciar() {
         if (!PILHA_GRANDE) {
@@ -24,6 +41,12 @@ public class GrandeCorrida {
             System.out.println("Corrida interrompida.");
         }
     }
+
+    /**
+     * Executa a corrida completa: aquece a JVM, gera os dados de cada tamanho, mede
+     * cada algoritmo nas três situações e imprime as tabelas de tempo, comparações,
+     * trocas e profundidade do Quick Sort.
+     */
 
     private static void executar() {
         System.out.println("Preparar, apontar...");
@@ -52,11 +75,20 @@ public class GrandeCorrida {
         imprimirProfundidade();
     }
 
+    /**
+     * Executa o algoritmo indicado (0 = Bubble, 1 = Insertion, 2 = Quick).
+     */
+
     private static void ordenar(int alg, Pet[] v, Contador c) {
         if (alg == 0) Ordenacao.bubbleSort(v, c);
         else if (alg == 1) Ordenacao.insertionSort(v, c);
         else Ordenacao.quickSort(v, c);
     }
+
+    /**
+     * Executa os algoritmos algumas vezes antes de medir, para a JVM otimizar o código e
+     * as primeiras medições não saírem artificialmente lentas.
+     */
 
     private static void aquecer() {
         Pet[] base = GeradorPets.gerarAleatorio(300, SEMENTE);
@@ -68,6 +100,14 @@ public class GrandeCorrida {
             }
         }
     }
+
+    /**
+     * Mede um algoritmo numa situação e guarda os resultados. Só a chamada a ordenar()
+     * fica dentro do cronômetro; a cópia e a conferência de correção ficam de fora.
+     * Comparações e trocas são determinísticas, então vale a última repetição. Se a pilha
+     * estourar, registra -1 (aparece como "ESTOURO" na tabela) em vez de encerrar a
+     * corrida, pois o estouro é um resultado válido para a pergunta 9.
+     */
 
     private static void medir(int alg, int sit, int t, Pet[] base) {
         Contador c = new Contador();
@@ -101,6 +141,10 @@ public class GrandeCorrida {
         }
     }
 
+    /**
+     * Imprime uma tabela (9 linhas: 3 algoritmos x 3 situações) com os três tamanhos.
+     */
+
     private static void imprimirTabela(String titulo, double[][][] v, String formato) {
         System.out.println();
         System.out.println("=== " + titulo + " ===");
@@ -118,6 +162,10 @@ public class GrandeCorrida {
             }
         }
     }
+
+    /**
+     * Imprime a profundidade máxima da recursão do Quick Sort em cada situação.
+     */
 
     private static void imprimirProfundidade() {
         System.out.println();

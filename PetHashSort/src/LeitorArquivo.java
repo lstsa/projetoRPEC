@@ -6,7 +6,20 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * Lê o arquivo de dados dos pets (formato: microchip;nome;especie;mania, um por
+ * linha). O separador é ";" porque as manias podem conter vírgulas.
+ */
+
 public class LeitorArquivo {
+
+    /**
+     * Lê o arquivo em UTF-8 e devolve a lista de pets válidos. Linhas vazias e
+     * comentários (#) são ignorados. Cada linha é validada em sequência (4 campos,
+     * número válido, 8 dígitos e microchip único); as inválidas são rejeitadas com aviso
+     * do número da linha, sem interromper a leitura. Ao final, mostra um resumo. O
+     * ArrayList guarda apenas os dados lidos; a tabela hash e a ordenação não dependem dele.
+     */
 
     public static ArrayList<Pet> ler(String caminho) throws IOException {
         ArrayList<Pet> pets = new ArrayList<>();
@@ -61,6 +74,11 @@ public class LeitorArquivo {
         System.out.println("Leitura concluída: " + pets.size() + " pets válidos, " + rejeitadas + " linhas rejeitadas.");
         return pets;
     }
+
+    /**
+     * Verifica por busca linear se o microchip já foi lido. É suficiente porque a
+     * leitura acontece uma única vez e com poucos pets.
+     */
 
     private static boolean existeMicrochip(ArrayList<Pet> pets, int microchip) {
         for (Pet pet : pets) {
